@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="processEngineConfiguration"
+          class="org.activiti.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
+        <!--<property name="commandInvoker" ref="commandInvoker"/>-->
+        <property name="enableDatabaseEventLogging" value="false"/>
+        <property name="enableVerboseExecutionTreeLogging" value="true"/>
+        <property name="customPreCommandInterceptors">
+            <list>
+                <bean class="com.kangjh.activiti.interceptor.DurationCommandInterceptor"></bean>
+            </list>
+        </property>
+        <property name="customPostCommandInterceptors">
+            <list>
+                <bean class="com.kangjh.activiti.interceptor.DurationCommandInterceptor"></bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="commandInvoker" class="com.kangjh.activiti.interceptor.MDCCommandInvoker"></bean>
+
+</beans>

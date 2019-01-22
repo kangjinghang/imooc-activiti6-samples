@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration debug="false" scan="true" scanPeriod="30 seconds">
+    <property name="log.dir" value="target/logs"/>
+    <property name="encoding" value="UTF-8"/>
+    <property name="plain" value="%msg%n"/>
+    <property name="std" value="%d{HH:mm:ss.SSS} [%thread] [%-5level]%msg %X{user} %logger{10}.%M:%L%n"/>
+    <property name="normal" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{10}.%M:%L - %msg%n"/>
+    <!-- activiti MDC日志配置，需要在代码中手动打开MDC支持:LogMDC.setMDCEnabled(true); -->
+    <property name="mdc" value="%d{HH:mm:ss.SSS} [%thread] [%-5level]%msg ProcessDefinitionId=%X{mdcProcessDefinitionID}
+executionId=%X{mdcExecutionId} mdcProcessInstanceID=%X{mdcProcessInstanceID} mdcBusinessKey=%X{mdcBusinessKey} %m%n"/>
+    <!-- 控制台输出 -->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+           <!-- <pattern>${plain}</pattern>-->
+            <pattern>${std}</pattern>
+            <charset>${encoding}</charset>
+        </encoder>
+    </appender>
+
+    <!-- 时间滚动输出 level为 All 日志 -->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${log.dir}/file.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.dir}/file.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${std}</pattern>
+            <charset>${encoding}</charset>
+        </encoder>
+    </appender>
+    <logger name="root">
+        <!--<level value="ERROR"/>-->
+        <level value="INFO"/>
+    </logger>
+    <logger name="com.kangjh">
+        <level value="DEBUG"/>
+    </logger>
+    <logger name="com.activiti">
+        <level value="INFO"/>
+    </logger>
+    <root>
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="file" />
+    </root>
+</configuration>
