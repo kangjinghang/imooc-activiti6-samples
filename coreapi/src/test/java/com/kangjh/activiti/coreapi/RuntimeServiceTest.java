@@ -93,15 +93,26 @@ public class RuntimeServiceTest {
         RuntimeService runtimeService = activitiRule.getRuntimeService();
         Map<String, Object> variables = Maps.newHashMap();
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("my-process", variables);
-        LOGGER.info("processInstance = {}", processInstance);
+
+        ProcessInstance processInstance1 = runtimeService.createProcessInstanceQuery()
+                .processInstanceId(processInstance.getId())
+                .singleResult();
 
 //        runtimeService.createProcessInstanceQuery()
-//                .processInstanceId(processInstance.getId())
+//                .processInstanceBusinessKey("businessKey001") //订单号等
 //                .singleResult();
 
-        runtimeService.createProcessInstanceQuery()
-                .processInstanceBusinessKey("businessKey001") //订单号等
-                .singleResult();
+        LOGGER.info("processInstance1 = {}", processInstance1);
+
+    }
+
+    @Test
+    @Deployment(resources = {"my-process.bpmn20.xml"})
+    public void testExecutionQuery() {
+        RuntimeService runtimeService = activitiRule.getRuntimeService();
+        Map<String, Object> variables = Maps.newHashMap();
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("my-process", variables);
+        LOGGER.info("processInstance = {}", processInstance);
 
         List<Execution> executions = runtimeService.createExecutionQuery()
                 .listPage(0, 100);

@@ -19,5 +19,4 @@ public class HelloBean {
         LOGGER.info("--------------------");
     }
 
-
 }

@@ -1,5 +1,7 @@
 package com.kangjh.activiti.config;
 
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.test.ActivitiRule;
@@ -29,13 +31,18 @@ public class SpringConfigTest {
     @Autowired
     public ActivitiRule activitiRule;
 
+    @Autowired
+    private RuntimeService runtimeService;
+
+    @Autowired
+    private TaskService taskService;
+
     @Test
     @Deployment(resources = {"my-process-spring.bpmn20.xml"})
     public void test() {
-        ProcessInstance processInstance = activitiRule.getRuntimeService().startProcessInstanceByKey("my-process");
-        Task task = activitiRule.getTaskService().createTaskQuery().singleResult();
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("my-process");
+        Task task = taskService.createTaskQuery().singleResult();
         activitiRule.getTaskService().complete(task.getId());
     }
-
 
 }

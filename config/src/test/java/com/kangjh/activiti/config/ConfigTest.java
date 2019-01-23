@@ -15,6 +15,27 @@ public class ConfigTest {
 
     @Test
     public void testConfig1() {
+
+        //ProcessEngineConfiguration
+        /*
+         *   public static ProcessEngineConfiguration createProcessEngineConfigurationFromResource(String resource, String beanName) {
+         *     return BeansConfigurationHelper.parseProcessEngineConfigurationFromResource(resource, beanName);
+         *   }
+         */
+
+
+        //BeansConfigurationHelper
+        /*
+         *   public static ProcessEngineConfiguration parseProcessEngineConfiguration(Resource springResource, String beanName) {
+         *     DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+         *     XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
+         *     xmlBeanDefinitionReader.setValidationMode(XmlBeanDefinitionReader.VALIDATION_XSD);
+         *     xmlBeanDefinitionReader.loadBeanDefinitions(springResource);
+         *     ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) beanFactory.getBean(beanName);
+         *     processEngineConfiguration.setBeans(new SpringBeanFactoryProxyMap(beanFactory));
+         *     return processEngineConfiguration;
+         *   }
+         */
         ProcessEngineConfiguration configuration = ProcessEngineConfiguration
                 .createProcessEngineConfigurationFromResourceDefault();
 
@@ -23,6 +44,12 @@ public class ConfigTest {
 
     @Test
     public void testConfig2() {
+        //ProcessEngineConfiguration
+        /*
+         *   public static ProcessEngineConfiguration createStandaloneProcessEngineConfiguration() {
+         *     return new StandaloneProcessEngineConfiguration();
+         *   }
+         */
         ProcessEngineConfiguration configuration = ProcessEngineConfiguration
                 .createStandaloneProcessEngineConfiguration();
         LOGGER.info("configuration = {}", configuration);

@@ -45,6 +45,7 @@ public class ManagementServiceTest {
 
     }
 
+    //获取表信息
     @Test
     @Deployment(resources = {"my-process-job.bpmn20.xml"})
     public void testTablePageQuery() {
@@ -60,6 +61,7 @@ public class ManagementServiceTest {
         }
     }
 
+    //执行自定义sql,基于mybatis 的mapper
     @Test
     @Deployment(resources = {"my-process.bpmn20.xml"})
     public void testCustomSql() {
